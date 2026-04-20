@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aman Pushp — Portfolio</title>
+    <meta name="description"
+        content="Portfolio of Aman Pushp — MCA Graduate, Full-Stack Developer, AI/ML Explorer from NIT Trichy." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            /* Light Theme Palette */
+            --bg: #f8fafc;
+            --surface: rgba(255, 255, 255, 0.7);
+            --border: rgba(15, 23, 42, 0.08);
+            --border-bright: rgba(79, 70, 229, 0.3);
+            --text: #0f172a;
+            --muted: #475569;
+            --accent: #4f46e5;
+            /* Indigo */
+            --accent2: #059669;
+            /* Emerald */
+            --accent3: #db2777;
+            /* Pink */
+            --glow: rgba(79, 70, 229, 0.15);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none;
+            /* Custom cursor */
+        }
+
+        h1,
+        h2,
+        h3,
+        .nav-logo,
+        .hero-name,
+        .section-title,
+        .proj-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* ── CUSTOM CURSOR ── */
+        #cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s, width 0.2s, height 0.2s, background 0.2s;
+        }
+
+        #cursor-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(79, 70, 229, 0.4);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.12s ease-out, width 0.25s, height 0.25s, border-color 0.25s;
+        }
+
+        body:hover #cursor-dot {
+            opacity: 1;
+        }
+
+        a:hover~#cursor-dot,
+        button:hover~#cursor-dot {
+            transform: translate(-50%, -50%) scale(2);
+            background: var(--accent2);
+        }
+
+        a:hover~#cursor-ring,
+        button:hover~#cursor-ring {
+            width: 48px;
+            height: 48px;
+            border-color: rgba(5, 150, 105, 0.4);
+        }
+
+        /* ── SCROLL PROGRESS ── */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            z-index: 9998;
+            background: transparent;
+        }
+
+        #scroll-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+            transition: width 0.05s linear;
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            padding: 0 clamp(1.5rem, 5vw, 4rem);
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(248, 250, 252, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--text);
+            letter-spacing: -0.03em;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* ── SMOKE HERO ── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            padding: 80px clamp(1.5rem, 5vw, 4rem) 0;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.05), transparent 50%);
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .hero-name {
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-name span {
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tw-wrap {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        #tw-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: var(--accent);
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0
+            }
+        }
+
+        .hero-desc {
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
+            color: var(--muted);
+            max-width: 540px;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-desc strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .hero-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            padding: 0.85rem 2rem;
+            border-radius: 99px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-ghost {
+            padding: 0.85rem 2rem;
+            border-radius: 99px;
+            background: #fff;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ── AVATAR ── */
+        .hero-avatar-container {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-avatar {
+            width: clamp(250px, 100%, 400px);
+            aspect-ratio: 1;
+            border-radius: 30px;
+            /* Modern squircle look */
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 10px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            transform: rotate(2deg);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-avatar:hover {
+            transform: rotate(0deg) translateY(-10px);
+        }
+
+        .hero-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .avatar-shadow {
+            position: absolute;
+            inset: 20px -20px -20px 20px;
+            background: linear-gradient(135deg, var(--accent2), var(--accent));
+            border-radius: 30px;
+            z-index: 1;
+            opacity: 0.2;
+            filter: blur(20px);
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            margin-bottom: 3.5rem;
+        }
+
+        .glass {
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        }
+
+        /* ── MACBOOK STATS (Apple Style) ── */
+        .macbook-section {
+            text-align: center;
+        }
+
+        .macbook-outer {
+            display: inline-block;
+            position: relative;
+            width: min(800px, 100%);
+            margin: 0 auto;
+        }
+
+        .macbook-screen {
+            background: #fff;
+            border-radius: 12px 12px 0 0;
+            border: 1px solid var(--border);
+            border-bottom: none;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* Mac Window Header */
+        .mac-header {
+            background: #f1f5f9;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mac-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mac-dot.close {
+            background: #ff5f56;
+        }
+
+        .mac-dot.min {
+            background: #ffbd2e;
+        }
+
+        .mac-dot.max {
+            background: #27c93f;
+        }
+
+        .mac-title {
+            margin: 0 auto;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #94a3b8;
+            letter-spacing: 0.05em;
+            padding-right: 40px;
+        }
+
+        .macbook-display {
+            background: #f8fafc;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .macbook-display-inner {
+            display: flex;
+            width: max-content;
+            height: 100%;
+            align-items: center;
+            animation: scroll-stats 25s linear infinite;
+        }
+
+        @keyframes scroll-stats {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .stat-card {
+            width: 280px;
+            padding: 2rem;
+            margin: 0 1rem;
+            border-radius: 16px;
+            background: #fff;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-platform {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: 'Plus Jakarta Sans';
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .macbook-base {
+            background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+            border-radius: 0 0 12px 12px;
+            height: 20px;
+            width: 104%;
+            margin-left: -2%;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .macbook-stand {
+            background: #94a3b8;
+            height: 10px;
+            width: 140px;
+            margin: 0 auto;
+            border-radius: 0 0 6px 6px;
+        }
+
+        /* ── ABOUT ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            padding: 3rem;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .about-text strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .about-stats-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .about-stat {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 1.2rem;
+            border-radius: 16px;
+            background: #fff;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .about-stat:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* ── SKILLS ── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            padding: 2rem;
+            border-radius: 20px;
+            background: #fff;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .skill-cat {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-icons-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-item i {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            color: var(--text);
+        }
+
+        .skill-item span {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .skill-item:hover i {
+            transform: scale(1.15);
+            color: var(--accent);
+        }
+
+        /* ── PROJECTS ── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .proj-card {
+            padding: 2.5rem;
+            border-radius: 24px;
+            background: #fff;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .proj-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--proj-color, var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .proj-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .proj-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .proj-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .proj-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .proj-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+
+        .proj-sub {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .proj-desc {
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .proj-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 99px;
+            font-weight: 600;
+            background: #f1f5f9;
+            color: var(--muted);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* ── UTILS ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-eyebrow {
+                justify-content: center;
+            }
+
+            .hero-desc {
+                margin: 0 auto 2.5rem;
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .hero-avatar-container {
+                order: -1;
+                margin-bottom: 2rem;
+            }
+
+            .hero-avatar {
+                width: 250px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+    <div id="scroll-progress">
+        <div id="scroll-progress-fill"></div>
+    </div>
+
+    <nav>
+        <div class="nav-logo">Aman<span>.</span></div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#stats">Stats</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Work</a>
+            <a href="https://github.com/AmanP-20" target="_blank" style="color: var(--text); font-size: 1.2rem;"><i
+                    class="fab fa-github"></i></a>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-grid">
+            <div class="hero-content">
+                <p class="hero-eyebrow reveal">Welcome to my portfolio</p>
+                <h1 class="hero-name reveal">Aman<br><span>Pushp</span></h1>
+                <div class="tw-wrap reveal">
+                    <span id="tw-text"></span><span id="tw-cursor"></span>
+                </div>
+                <p class="hero-desc reveal">
+                    MCA Graduate from <strong>NIT Trichy</strong>. I build professional full-stack applications, explore
+                    <strong>GenAI architectures</strong>, and solve complex problems through competitive programming.
+                </p>
+                <div class="hero-btns reveal">
+                    <a href="#projects" class="btn-primary">View Projects</a>
+                    <a href="https://github.com/AmanP-20" target="_blank" class="btn-ghost"><i class="fab fa-github"
+                            style="margin-right: 8px;"></i> GitHub</a>
+                </div>
+            </div>
+            <div class="hero-avatar-container reveal">
+                <div class="avatar-shadow"></div>
+                <div class="hero-avatar">
+                    <img src="/home/aman/CSE/protfolio/1394847.png" alt="Aman Pushp" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-label reveal">01 — Who I am</div>
+        <h2 class="section-title reveal">About Me</h2>
+        <div class="about-grid glass reveal">
+            <p class="about-text">
+                I'm a passionate software engineer with a strong foundation in mathematics and algorithms.
+                My core focus spans <strong>advanced AI architectures</strong>, <strong>generative AI</strong>,
+                and building highly optimized, user-centric software systems. I thrive at the intersection of
+                research and practical engineering — where clean code meets creative problem-solving.
+            </p>
+            <div class="about-stats-col">
+                <div class="about-stat">
+                    <div class="about-stat-icon" style="background: rgba(79, 70, 229, 0.1); color: var(--accent);">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <p style="font-weight:700; font-size:1rem; color: var(--text);">MCA — NIT Trichy</p>
+                        <p style="font-size:0.85rem; color:var(--muted); margin-top:4px;">National Institute of
+                            Technology</p>
+                    </div>
+                </div>
+                <div class="about-stat">
+                    <div class="about-stat-icon" style="background: rgba(5, 150, 105, 0.1); color: var(--accent2);">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div>
+                        <p style="font-weight:700; font-size:1rem; color: var(--text);">Competitive Programmer</p>
+                        <p style="font-size:0.85rem; color:var(--muted); margin-top:4px;">Algorithms & Optimization</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats">
+        <div class="section-label reveal">02 — Competitive Programming</div>
+        <h2 class="section-title reveal">Coding Stats</h2>
+        <div class="macbook-section reveal">
+            <div class="macbook-outer">
+                <div class="macbook-screen">
+                    <div class="mac-header">
+                        <span class="mac-dot close"></span>
+                        <span class="mac-dot min"></span>
+                        <span class="mac-dot max"></span>
+                        <span class="mac-title">aman-achievements.sh</span>
+                    </div>
+                    <div class="macbook-display">
+                        <div class="macbook-display-inner" id="stats-strip">
+                            <div class="stat-card" style="border-top: 4px solid #ffa116;">
+                                <div class="stat-icon">🏆</div>
+                                <div class="stat-platform">LeetCode</div>
+                                <div class="stat-value" style="color:#ffa116;">Guardian</div>
+                                <div class="stat-label">Top Rating Tier</div>
+                            </div>
+                            <div class="stat-card" style="border-top: 4px solid #1e90ff;">
+                                <div class="stat-icon">⚡</div>
+                                <div class="stat-platform">Codeforces</div>
+                                <div class="stat-value" style="color:#1e90ff;">Specialist</div>
+                                <div class="stat-label">Rated Competitor</div>
+                            </div>
+                            <div class="stat-card" style="border-top: 4px solid #4f46e5;">
+                                <div class="stat-icon">⭐</div>
+                                <div class="stat-platform">CodeChef</div>
+                                <div class="stat-value" style="color:#4f46e5;">4 Star</div>
+                                <div class="stat-label">★★★★☆</div>
+                            </div>
+                            <div class="stat-card" style="border-top: 4px solid #059669;">
+                                <div class="stat-icon">🎯</div>
+                                <div class="stat-platform">IICPC Codefest</div>
+                                <div class="stat-value" style="color:#059669;">AIR 2284</div>
+                                <div class="stat-label">All India Rank</div>
+                            </div>
+                            <div class="stat-card" style="border-top: 4px solid #ffa116;">
+                                <div class="stat-icon">🏆</div>
+                                <div class="stat-platform">LeetCode</div>
+                                <div class="stat-value" style="color:#ffa116;">Guardian</div>
+                                <div class="stat-label">Top Rating Tier</div>
+                            </div>
+                            <div class="stat-card" style="border-top: 4px solid #1e90ff;">
+                                <div class="stat-icon">⚡</div>
+                                <div class="stat-platform">Codeforces</div>
+                                <div class="stat-value" style="color:#1e90ff;">Specialist</div>
+                                <div class="stat-label">Rated Competitor</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="macbook-base"></div>
+                <div class="macbook-stand"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-label reveal">03 — Tools & Technologies</div>
+        <h2 class="section-title reveal">Tech Stack</h2>
+        <div class="skills-grid">
+            <div class="skill-card reveal" style="--card-color: rgba(79,70,229,0.1);">
+                <div class="skill-cat" style="color:var(--accent);">AI / Machine Learning</div>
+                <div class="skill-icons-row">
+                    <div class="skill-item"><i class="fas fa-robot"></i><span>GenAI</span></div>
+                    <div class="skill-item"><i class="fas fa-wave-square"></i><span>LSTM/GRU</span></div>
+                    <div class="skill-item"><i class="fas fa-network-wired"></i><span>Neural Net</span></div>
+                </div>
+            </div>
+            <div class="skill-card reveal" style="--card-color: rgba(5,150,105,0.1);">
+                <div class="skill-cat" style="color:var(--accent2);">Frontend</div>
+                <div class="skill-icons-row">
+                    <div class="skill-item"><i class="fab fa-react"></i><span>React</span></div>
+                    <div class="skill-item"><i class="fab fa-js"></i><span>JavaScript</span></div>
+                    <div class="skill-item"><i class="fas fa-wind"></i><span>Tailwind</span></div>
+                </div>
+            </div>
+            <div class="skill-card reveal" style="--card-color: rgba(219,39,119,0.1);">
+                <div class="skill-cat" style="color:var(--accent3);">Backend & Systems</div>
+                <div class="skill-icons-row">
+                    <div class="skill-item"><i class="fab fa-node-js"></i><span>Node.js</span></div>
+                    <div class="skill-item"><i class="fas fa-plug"></i><span>Socket.io</span></div>
+                    <div class="skill-item"><i class="fas fa-database"></i><span>MongoDB</span></div>
+                    <div class="skill-item"><i class="fas fa-code"></i><span>C++</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-label reveal">04 — What I've built</div>
+        <h2 class="section-title reveal">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="proj-card reveal" style="--proj-color: #4f46e5;">
+                <div class="proj-header">
+                    <div class="proj-icon" style="background: rgba(79, 70, 229, 0.1); color: #4f46e5;"><i
+                            class="fas fa-video"></i></div>
+                    <a href="https://github.com/AmanP-20" target="_blank" class="proj-icon"
+                        style="color: var(--text);"><i class="fab fa-github"></i></a>
+                </div>
+                <div>
+                    <div class="proj-name">Nexora</div>
+                    <div class="proj-sub">Developer Collaboration Platform</div>
+                </div>
+                <p class="proj-desc">A real-time developer collaboration platform featuring <strong>WebRTC</strong>
+                    peer-to-peer video calling, live group chat, and instant messaging — built for teams who move fast.
+                </p>
+                <div class="proj-tags">
+                    <span class="tag">WebRTC</span> <span class="tag">Socket.io</span> <span class="tag">React</span>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" style="--proj-color: #059669;">
+                <div class="proj-header">
+                    <div class="proj-icon" style="background: rgba(5, 150, 105, 0.1); color: #059669;"><i
+                            class="fas fa-book-open"></i></div>
+                    <a href="https://github.com/AmanP-20" target="_blank" class="proj-icon"
+                        style="color: var(--text);"><i class="fab fa-github"></i></a>
+                </div>
+                <div>
+                    <div class="proj-name">Engigems</div>
+                    <div class="proj-sub">Engineering Resource Platform</div>
+                </div>
+                <p class="proj-desc">An engineering resource sharing platform built during an internship at <strong>NIT
+                        Trichy</strong>, enabling students to discover, share, and collaborate seamlessly.</p>
+                <div class="proj-tags">
+                    <span class="tag">NIT Trichy</span> <span class="tag">Node.js</span> <span
+                        class="tag">Full-Stack</span>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" style="--proj-color: #db2777;">
+                <div class="proj-header">
+                    <div class="proj-icon" style="background: rgba(219, 39, 119, 0.1); color: #db2777;"><i
+                            class="fas fa-shield-virus"></i></div>
+                    <a href="https://github.com/AmanP-20" target="_blank" class="proj-icon"
+                        style="color: var(--text);"><i class="fab fa-github"></i></a>
+                </div>
+                <div>
+                    <div class="proj-name">Polyglot Creator</div>
+                    <div class="proj-sub">Security Research Tool</div>
+                </div>
+                <p class="proj-desc">A <strong>Java-based</strong> security research tool for crafting polyglot
+                    files—files that are simultaneously valid in multiple formats. Used for malware research and format
+                    exploits.</p>
+                <div class="proj-tags">
+                    <span class="tag">Java</span> <span class="tag">Security</span> <span class="tag">Binary
+                        Parsing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="border-top: 1px solid var(--border); padding: 3rem 5%; text-align: center; margin-top: 4rem;">
+        <h3 style="font-family: 'Plus Jakarta Sans'; font-size: 1.5rem; margin-bottom: 1rem;">Aman Pushp</h3>
+        <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem;">MCA Graduate, NIT Trichy</p>
+        <div style="display:flex; gap:1.5rem; align-items:center; justify-content: center;">
+            <a href="https://github.com/AmanP-20" target="_blank"
+                style="color: var(--text); font-size: 1.5rem; transition: color 0.3s;"><i class="fab fa-github"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        /* ── CURSOR ── */
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        function animCursor() {
+            dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+            rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+            ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+            requestAnimationFrame(animCursor);
+        }
+        animCursor();
+
+        /* ── SCROLL PROGRESS ── */
+        window.addEventListener('scroll', () => {
+            const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-progress-fill').style.width = Math.min(pct, 100) + '%';
+        });
+
+        /* ── TYPEWRITER ── */
+        const phrases = ['MCA Graduate', 'Full-Stack Developer', 'AI/ML Explorer', 'Competitive Programmer'];
+        const twText = document.getElementById('tw-text');
+        let pIdx = 0, cIdx = 0, deleting = false;
+        function typeEffect() {
+            const phrase = phrases[pIdx];
+            if (deleting) { twText.textContent = phrase.substring(0, --cIdx); }
+            else { twText.textContent = phrase.substring(0, ++cIdx); }
+            let delay = deleting ? 30 : 70;
+            if (!deleting && cIdx === phrase.length) { delay = 2000; deleting = true; }
+            else if (deleting && cIdx === 0) { deleting = false; pIdx = (pIdx + 1) % phrases.length; delay = 400; }
+            setTimeout(typeEffect, delay);
+        }
+        setTimeout(typeEffect, 500);
+
+        /* ── GSAP REVEAL ── */
+        gsap.registerPlugin(ScrollTrigger);
+        document.querySelectorAll('.reveal').forEach(el => {
+            gsap.to(el, {
+                opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
+            });
+        });
+
+        /* ── x.ai Inspired Ethereal Smoke Waves ── */
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let time = 0;
+
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        function drawFluidWave(yOffset, amp, speed, color1, color2, alpha) {
+            ctx.beginPath();
+            ctx.moveTo(canvas.width, canvas.height);
+            ctx.lineTo(canvas.width, 0);
+
+            // Draw flowing curve from right to left
+            for (let x = canvas.width; x >= canvas.width * 0.3; x -= 20) {
+                // Combine sine waves for organic fluid look
+                const wave1 = Math.sin((x * 0.003) + (time * speed)) * amp;
+                const wave2 = Math.cos((x * 0.005) + (time * speed * 0.8)) * (amp * 0.5);
+                const y = (canvas.height * yOffset) + wave1 + wave2;
+                ctx.lineTo(x, y);
+            }
+
+            // Close the path offscreen right
+            ctx.lineTo(canvas.width * 0.3, canvas.height);
+            ctx.closePath();
+
+            // Create gradient
+            const gradient = ctx.createLinearGradient(canvas.width, 0, canvas.width * 0.3, canvas.height);
+            gradient.addColorStop(0, color1);
+            gradient.addColorStop(1, color2);
+
+            ctx.fillStyle = gradient;
+            ctx.globalAlpha = alpha;
+            ctx.fill();
+        }
+
+        function animCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            time += 0.015;
+
+            // Multiple overlapping waves to create volumetric "smoke" feeling on the right
+            ctx.globalCompositeOperation = 'multiply';
+
+            // Deep Indigo Wave
+            drawFluidWave(0.3, 150, 1.2, 'rgba(79, 70, 229, 0.4)', 'rgba(79, 70, 229, 0)', 0.4);
+            // Soft Blue Wave
+            drawFluidWave(0.6, 200, 0.8, 'rgba(56, 189, 248, 0.3)', 'rgba(56, 189, 248, 0)', 0.3);
+            // Purple/Pink Accent Wave
+            drawFluidWave(0.8, 120, 1.5, 'rgba(219, 39, 119, 0.2)', 'rgba(219, 39, 119, 0)', 0.3);
+
+            // Soft overlay to blend it
+            drawFluidWave(0.5, 300, 0.5, 'rgba(99, 102, 241, 0.2)', 'rgba(255, 255, 255, 0)', 0.5);
+
+            ctx.globalCompositeOperation = 'source-over';
+            requestAnimationFrame(animCanvas);
+        }
+        animCanvas();
+    </script>
+</body>
+
+</html>
